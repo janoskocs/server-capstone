@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend of my capstone project.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janoskocs/server-capstone.git"
+  },
+  "author": "Janos Kocs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janoskocs/server-capstone/issues"
+  },
+  "homepage": "https://github.com/janoskocs/server-capstone#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  }
+}
