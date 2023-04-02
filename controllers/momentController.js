@@ -1,4 +1,5 @@
 const Moment = require("../models/MomentModel");
+const mongoose = require("mongoose");
 
 //GET all moments
 const getAllMoments = async (req, res) => {
@@ -10,8 +11,16 @@ const getAllMoments = async (req, res) => {
 //GET a single moment
 const getMoment = async (req, res) => {
   const { momentId } = req.params;
+
+  //Check if the id we have is valid, Mongoose has this built in to check if the id is 12 chars
+  if (!mongoose.Types.ObjectId.isValid(momentId)) {
+    return res.status(404).json({
+      error: "Invalid id.",
+    });
+  }
   const moment = await Moment.findById(momentId);
 
+  //If the id is valid, check again if we have this moment saved
   if (!moment) {
     return res.status(404).json({
       error: "This moment doesn't exist in the history of humankind.",
