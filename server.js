@@ -1,5 +1,7 @@
 require("dotenv").config();
+
 const express = require("express");
+const mongoose = require("mongoose");
 const momentsRoutes = require("./routes/moments");
 
 //Express app
@@ -16,7 +18,15 @@ app.use((req, res, next) => {
 //Routes
 app.use("/api/moments", momentsRoutes);
 
-//Listen for requests
-app.listen(process.env.PORT, () => {
-  console.log("Listening on port 4000");
-});
+//Connect to DB first, then start listening for requests
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    //Listen for requests
+    app.listen(process.env.PORT, () => {
+      console.log(`Connected to DB and listening on ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
