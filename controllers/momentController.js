@@ -49,10 +49,58 @@ const createMoment = async (req, res) => {
 
 //DELETE a moment
 
+const deleteMoment = async (req, res) => {
+  const { momentId } = req.params;
+
+  //Check if the id we have is valid, Mongoose has this built in to check if the id is 12 chars
+  if (!mongoose.Types.ObjectId.isValid(momentId)) {
+    return res.status(404).json({
+      error: "Invalid id.",
+    });
+  }
+
+  const moment = await Moment.findOneAndDelete({ _id: momentId }); //MongoDB has this _id by default
+
+  if (!moment) {
+    return res.status(404).json({
+      error: "This moment doesn't exist in the history of humankind.",
+    });
+  }
+
+  res.status(200).json(moment);
+};
 //PATCH a moment
+
+const updateMoment = async (req, res) => {
+  const { momentId } = req.params;
+
+  //Check if the id we have is valid, Mongoose has this built in to check if the id is 12 chars
+  if (!mongoose.Types.ObjectId.isValid(momentId)) {
+    return res.status(404).json({
+      error: "Invalid id.",
+    });
+  }
+
+  const moment = await Moment.findOneAndUpdate(
+    { _id: momentId },
+    {
+      ...req.body,
+    }
+    //Any properties on the body will be passed as an arg to update moment
+  );
+  if (!moment) {
+    return res.status(404).json({
+      error: "This moment doesn't exist in the history of humankind.",
+    });
+  }
+
+  res.status(200).json(moment);
+};
 
 module.exports = {
   createMoment,
   getAllMoments,
   getMoment,
+  updateMoment,
+  deleteMoment,
 };

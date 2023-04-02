@@ -3,6 +3,8 @@ const {
   createMoment,
   getAllMoments,
   getMoment,
+  updateMoment,
+  deleteMoment,
 } = require("../controllers/momentController");
 
 const router = express.Router();
@@ -17,13 +19,9 @@ router.get("/:momentId", getMoment);
 router.post("/", createMoment);
 
 //Delete a moment
-router.delete("/:momentId", (req, res) => {
-  res.json({ message: "Delete a moment" });
-});
+router.delete("/:momentId", deleteMoment);
 
 //Update a moment
-router.patch("/:momentId", (req, res) => {
-  res.json({ message: "Update a moment" });
-});
+router.patch("/:momentId", updateMoment);
 
 module.exports = router;
