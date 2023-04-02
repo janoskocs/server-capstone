@@ -1,8 +1,25 @@
 const Moment = require("../models/MomentModel");
 
 //GET all moments
+const getAllMoments = async (req, res) => {
+  const moments = await Moment.find({}).sort({ createdAt: -1 }); //Get all moments from DB and sort them in descending order. knex what? knex who?
+
+  res.status(200).json(moments);
+};
 
 //GET a single moment
+const getMoment = async (req, res) => {
+  const { momentId } = req.params;
+  const moment = await Moment.findById(momentId);
+
+  if (!moment) {
+    return res.status(404).json({
+      error: "This moment doesn't exist in the history of humankind.",
+    });
+  }
+
+  res.status(200).json(moment);
+};
 
 //POST new moment
 const createMoment = async (req, res) => {
@@ -27,4 +44,6 @@ const createMoment = async (req, res) => {
 
 module.exports = {
   createMoment,
+  getAllMoments,
+  getMoment,
 };
