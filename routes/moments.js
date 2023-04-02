@@ -1,7 +1,5 @@
 const express = require("express");
-
-const Moment = require("../models/MomentModel");
-
+const { createMoment } = require("../controllers/momentController");
 const router = express.Router();
 
 //Get all moments
@@ -15,21 +13,7 @@ router.get("/:momentId", (req, res) => {
 });
 
 //Post a new moment
-router.post("/", async (req, res) => {
-  const { title, content, mood } = req.body;
-
-  try {
-    const moment = await Moment.create({
-      title,
-      content,
-      mood,
-    });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-    console.log(error);
-  }
-  res.json({ message: "Post a new moment" });
-});
+router.post("/", createMoment);
 
 //Delete a moment
 router.delete("/:momentId", (req, res) => {
