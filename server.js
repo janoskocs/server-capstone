@@ -1,13 +1,18 @@
 require("dotenv").config();
 const express = require("express");
+const momentsRoutes = require("./routes/moments");
 
 //Express app
 const app = express();
 
-//Routes
-app.get("/", (req, res) => {
-  res.json({ message: "welcome" });
+//Middlewares
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
 });
+
+//Routes
+app.use("/api/moments", momentsRoutes);
 
 //Listen for requests
 app.listen(process.env.PORT, () => {
