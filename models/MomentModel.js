@@ -17,6 +17,10 @@ const momentSchema = new Schema(
       type: Number,
       required: true,
     },
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true } //Whenever a new doc is created/updated, auto add timestamp
 );

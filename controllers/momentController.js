@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 
 //GET all moments
 const getAllMoments = async (req, res) => {
-  const moments = await Moment.find({}).sort({ createdAt: -1 }); //Get all moments from DB and sort them in descending order. knex what? knex who?
+  const user_id = req.user._id; //This is from the requireAuth middleware
+
+  const moments = await Moment.find({ user_id }).sort({ createdAt: -1 }); //Get moments based on user id from DB and sort them in descending order. knex what? knex who?
 
   res.status(200).json(moments);
 };
@@ -36,10 +38,12 @@ const createMoment = async (req, res) => {
 
   //Add document to DB
   try {
+    const user_id = req.user._id; // This is from the requireAuth middleware
     const moment = await Moment.create({
       title,
       content,
       mood,
+      user_id,
     });
     res.status(201).json(moment);
   } catch (error) {
