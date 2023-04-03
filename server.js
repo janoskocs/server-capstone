@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const momentsRoutes = require("./routes/moments");
+const userRoutes = require("./routes/user");
 
 //Express app
 const app = express();
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 
 //Routes
 app.use("/api/moments", momentsRoutes);
+app.use("/api/user", userRoutes);
 
 //Connect to DB first, then start listening for requests
 mongoose
