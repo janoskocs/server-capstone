@@ -46,4 +46,26 @@ userSchema.statics.signup = async function (email, password) {
   return user;
 };
 
+//Static log in method
+
+userSchema.statics.login = async function (email, password) {
+  //Check if inputs are valid
+  if (!email || !password) {
+    throw Error("All fields must be filled");
+  }
+
+  //Check if user exists in DB based on email
+  const user = await this.findOne({ email });
+  if (!user) {
+    throw Error("Incorrect email");
+  }
+  const comparePassword = await bcrypt.compare(password, user.password); //Compare input password and DB hash
+
+  if (!comparePassword) {
+    throw Error("Incorrect password");
+  }
+
+  return user;
+};
+
 module.exports = mongoose.model("User", userSchema);
