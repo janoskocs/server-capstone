@@ -18,7 +18,6 @@ const signupUser = async (req, res) => {
     res.status(400).json({ error: error.message });
     console.log(error);
   }
-  res.json({ message: "Sign up user" });
 };
 
 module.exports = {
