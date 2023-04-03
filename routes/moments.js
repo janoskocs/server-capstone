@@ -7,8 +7,13 @@ const {
   deleteMoment,
 } = require("../controllers/momentController");
 
+const requireAuth = require("../middleware/requireAuth");
 const router = express.Router();
 
+//This will check for the token sent back from the frontend
+//If auth is valid, it will attach the id in the req.user so the controllers below have access to it
+//Check the requireAuth for more comments
+router.use(requireAuth);
 //Get all moments
 router.get("/", getAllMoments);
 
