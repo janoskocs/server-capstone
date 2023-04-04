@@ -115,7 +115,13 @@ userSchema.statics.followFriend = async function (_id, friend_id) {
 
   const userWithFriend = await this.updateOne(
     { _id: _id },
-    { $push: { friends: { friend_id: friend_id } } }
+    {
+      $push: {
+        friends: {
+          $each: [{ friend_id: friend_id, createdAt: new Date() }],
+        },
+      },
+    }
   );
 
   return userWithFriend;
