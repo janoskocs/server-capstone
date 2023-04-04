@@ -24,10 +24,10 @@ const loginUser = async (req, res) => {
 
 //User Sign up
 const signupUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, first_name, last_name } = req.body;
 
   try {
-    const user = await User.signup(email, password);
+    const user = await User.signup(email, password, first_name, last_name);
     const token = createToken(user._id); //Create token based on user's id
     res.status(200).json({ email, token }); //Send email and token as response, this will be the payload, secret, and sign thingy in a hash
   } catch (error) {
