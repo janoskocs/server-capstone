@@ -21,7 +21,20 @@ const getSingleUser = async (req, res) => {
   }
 };
 
+const followFriend = async (req, res) => {
+  const { userId } = req.params;
+  const { friend_id } = req.body;
+
+  try {
+    const update = await User.followFriend(userId, friend_id);
+    res.status(200).json(update);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getSingleUser,
+  followFriend,
 };

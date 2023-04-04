@@ -105,4 +105,20 @@ userSchema.statics.login = async function (email, password) {
   return user;
 };
 
+userSchema.statics.followFriend = async function (_id, friend_id) {
+  //Check if the id we have is valid, Mongoose has this built in to check if the id is 12 chars
+  if (!mongoose.Types.ObjectId.isValid(friend_id)) {
+    return res.status(404).json({
+      error: "Invalid friend ID.",
+    });
+  }
+
+  const userWithFriend = await this.updateOne(
+    { _id: _id },
+    { friends: [{ friend_id: friend_id }] }
+  );
+
+  return userWithFriend;
+};
+
 module.exports = mongoose.model("User", userSchema);

@@ -3,6 +3,7 @@ const express = require("express");
 const {
   getAllUsers,
   getSingleUser,
+  followFriend,
 } = require("../controllers/usersController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -19,4 +20,5 @@ router.get("/allusers", getAllUsers);
 //Get a single user
 router.get("/allusers/:userId", getSingleUser);
 
+router.patch("/allusers/:userId", followFriend);
 module.exports = router;
