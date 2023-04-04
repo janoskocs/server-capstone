@@ -12,15 +12,12 @@ const getAllUsers = async (req, res) => {
 
 //Get a single user by Id
 const getSingleUser = async (req, res) => {
-  const { email, password, first_name, last_name } = req.body;
-
+  const { userId } = req.params;
   try {
-    const user = await User.signup(email, password, first_name, last_name);
-    const token = createToken(user._id); //Create token based on user's id
-    res.status(200).json({ email, token }); //Send email and token as response, this will be the payload, secret, and sign thingy in a hash
+    const user = await User.find({ _id: userId });
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
-    console.log(error);
   }
 };
 
