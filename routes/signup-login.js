@@ -4,10 +4,6 @@ const {
   signupUser,
 } = require("../controllers/userLogSignController");
 
-const {
-  getAllUsers,
-  getSingleUser,
-} = require("../controllers/usersController");
 const router = express.Router();
 
 //Log in route
