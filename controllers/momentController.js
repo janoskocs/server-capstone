@@ -73,8 +73,8 @@ const deleteMoment = async (req, res) => {
 
   res.status(200).json(moment);
 };
-//PATCH a moment
 
+//PATCH a moment
 const updateMoment = async (req, res) => {
   const { momentId } = req.params;
 
@@ -101,10 +101,24 @@ const updateMoment = async (req, res) => {
   res.status(200).json(moment);
 };
 
+//Appreciate a moment
+const appreciateMoment = async (req, res) => {
+  const { momentId } = req.params;
+  const { friend_id } = req.body;
+
+  try {
+    const update = await Moment.appreciateMoment(momentId, friend_id);
+    res.status(200).json(update);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createMoment,
   getAllMoments,
   getMoment,
   updateMoment,
   deleteMoment,
+  appreciateMoment,
 };

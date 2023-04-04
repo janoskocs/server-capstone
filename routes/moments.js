@@ -5,6 +5,7 @@ const {
   getMoment,
   updateMoment,
   deleteMoment,
+  appreciateMoment,
 } = require("../controllers/momentController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -28,5 +29,8 @@ router.delete("/:momentId", deleteMoment);
 
 //Update a moment
 router.patch("/:momentId", updateMoment);
+
+//Appreciate a moment
+router.patch("/appreciate/:momentId", appreciateMoment);
 
 module.exports = router;
