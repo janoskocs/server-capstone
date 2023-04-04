@@ -27,6 +27,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    friends: [
+      {
+        friend_id: String,
+        createdAt: Date,
+      },
+    ],
   },
   { timestamps: true } //Whenever a new doc is created/updated, auto add timestamp
 );
