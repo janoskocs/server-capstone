@@ -49,7 +49,8 @@ userSchema.statics.signup = async function (
   email,
   password,
   first_name,
-  last_name
+  last_name,
+  avatar
 ) {
   //This must be a regular function so that the this keyword can do its job
 
@@ -84,6 +85,7 @@ userSchema.statics.signup = async function (
     password: hash,
     first_name,
     last_name,
+    avatar,
   });
 
   return user;

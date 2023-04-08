@@ -19,7 +19,7 @@ const getShortenedSpecificUsers = async (req, res) => {
     const ids = users[0].peopleIfollow.map((id) => id.follower_id);
     const details = await User.find(
       { _id: { $in: [...ids] } },
-      { first_name: 1, last_name: 1, email: 1 }
+      { first_name: 1, last_name: 1, email: 1, avatar: 1 }
     );
 
     res.status(200).json(details);
