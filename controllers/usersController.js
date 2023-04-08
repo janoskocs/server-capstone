@@ -33,8 +33,21 @@ const followFriend = async (req, res) => {
   }
 };
 
+const unFollowFriend = async (req, res) => {
+  const { userId } = req.params;
+  const { follower_id } = req.body;
+
+  try {
+    const update = await User.unFollowFriend(userId, follower_id);
+    res.status(200).json(update);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getSingleUser,
   followFriend,
+  unFollowFriend,
 };

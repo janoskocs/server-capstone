@@ -146,4 +146,33 @@ userSchema.statics.followFriend = async function (_id, follower_id) {
   return followPerson;
 };
 
+userSchema.statics.unFollowFriend = async function (_id, follower_id) {
+  //Check if the id we have is valid, Mongoose has this built in to check if the id is 12 chars
+  if (!mongoose.Types.ObjectId.isValid(follower_id)) {
+    return res.status(404).json({
+      error: "Invalid friend ID.",
+    });
+  }
+
+  //Following a person updates "peopleIfollow"
+  const unFollowPerson = await this.updateOne(
+    { _id: _id },
+    {
+      $pull: {
+        peopleIfollow: { follower_id: follower_id },
+      },
+    }
+  );
+
+  //Here, the other persons followers list needs to be updated with my id
+  const updateFollowersOfTheOtherPerson = await this.updateOne(
+    { _id: follower_id },
+    {
+      $pull: { followers: { follower_id: _id } },
+    }
+  );
+
+  return unFollowPerson;
+};
+
 module.exports = mongoose.model("User", userSchema);

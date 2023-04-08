@@ -4,6 +4,7 @@ const {
   getAllUsers,
   getSingleUser,
   followFriend,
+  unFollowFriend,
 } = require("../controllers/usersController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -21,4 +22,6 @@ router.get("/allusers", getAllUsers);
 router.get("/allusers/:userId", getSingleUser);
 
 router.patch("/allusers/:userId", followFriend);
+router.patch("/allusers/unfollow/:userId", unFollowFriend);
+
 module.exports = router;
