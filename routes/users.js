@@ -5,6 +5,7 @@ const {
   getSingleUser,
   followFriend,
   unFollowFriend,
+  getShortenedSpecificUsers,
 } = require("../controllers/usersController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -18,10 +19,16 @@ router.use(requireAuth);
 //Get all users
 router.get("/allusers", getAllUsers);
 
+//Get shortened specific users
+router.get("/allusers/shortened", getShortenedSpecificUsers);
+
 //Get a single user
 router.get("/allusers/:userId", getSingleUser);
 
+//Follow someone
 router.patch("/allusers/:userId", followFriend);
+
+//Unfollow someone
 router.patch("/allusers/unfollow/:userId", unFollowFriend);
 
 module.exports = router;

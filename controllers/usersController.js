@@ -10,6 +10,24 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+//Get all users
+const getShortenedSpecificUsers = async (req, res) => {
+  const user_id = req.user._id;
+
+  try {
+    const users = await User.find({ _id: user_id }).sort({ createdAt: -1 });
+    const ids = users[0].peopleIfollow.map((id) => id.follower_id);
+    const details = await User.find(
+      { _id: { $in: [...ids] } },
+      { first_name: 1, last_name: 1, email: 1 }
+    );
+
+    res.status(200).json(details);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 //Get a single user by Id
 const getSingleUser = async (req, res) => {
   const { userId } = req.params;
@@ -21,6 +39,7 @@ const getSingleUser = async (req, res) => {
   }
 };
 
+//Follow friend
 const followFriend = async (req, res) => {
   const { userId } = req.params;
   const { follower_id } = req.body;
@@ -33,6 +52,7 @@ const followFriend = async (req, res) => {
   }
 };
 
+//Unfollow friend
 const unFollowFriend = async (req, res) => {
   const { userId } = req.params;
   const { follower_id } = req.body;
@@ -50,4 +70,5 @@ module.exports = {
   getSingleUser,
   followFriend,
   unFollowFriend,
+  getShortenedSpecificUsers,
 };
