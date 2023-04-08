@@ -27,9 +27,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    friends: [
+    peopleIfollow: [
       {
-        friend_id: String,
+        follower_id: String,
+        createdAt: Date,
+      },
+    ],
+    followers: [
+      {
+        follower_id: String,
         createdAt: Date,
       },
     ],
@@ -105,26 +111,39 @@ userSchema.statics.login = async function (email, password) {
   return user;
 };
 
-userSchema.statics.followFriend = async function (_id, friend_id) {
+userSchema.statics.followFriend = async function (_id, follower_id) {
   //Check if the id we have is valid, Mongoose has this built in to check if the id is 12 chars
-  if (!mongoose.Types.ObjectId.isValid(friend_id)) {
+  if (!mongoose.Types.ObjectId.isValid(follower_id)) {
     return res.status(404).json({
       error: "Invalid friend ID.",
     });
   }
 
-  const userWithFriend = await this.updateOne(
+  //Following a person updates "peopleIfollow"
+  const followPerson = await this.updateOne(
     { _id: _id },
     {
       $push: {
-        friends: {
-          $each: [{ friend_id: friend_id, createdAt: new Date() }],
+        peopleIfollow: {
+          $each: [{ follower_id: follower_id, createdAt: new Date() }],
         },
       },
     }
   );
 
-  return userWithFriend;
+  //Here, the other persons followers list needs to be updated with my id
+  const updateFollowersOfTheOtherPerson = await this.updateOne(
+    { _id: follower_id },
+    {
+      $push: {
+        followers: {
+          $each: [{ follower_id: _id, createdAt: new Date() }],
+        },
+      },
+    }
+  );
+
+  return followPerson;
 };
 
 module.exports = mongoose.model("User", userSchema);

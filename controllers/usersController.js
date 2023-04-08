@@ -23,10 +23,10 @@ const getSingleUser = async (req, res) => {
 
 const followFriend = async (req, res) => {
   const { userId } = req.params;
-  const { friend_id } = req.body;
+  const { follower_id } = req.body;
 
   try {
-    const update = await User.followFriend(userId, friend_id);
+    const update = await User.followFriend(userId, follower_id);
     res.status(200).json(update);
   } catch (error) {
     res.status(400).json({ error: error.message });
