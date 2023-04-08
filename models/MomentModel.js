@@ -3,23 +3,27 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //Set up document and its Schema
+//Mood schema
+const moodSchema = new Schema({
+  positive: Number,
+  negative: Number,
+  middle: Number,
+});
+
 const momentSchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     content: {
       type: String,
       required: true,
     },
-    mood: {
-      type: Number,
-      required: true,
-    },
+    mood: moodSchema,
     user_id: {
       type: String,
       required: true,
+    },
+    image_url: {
+      type: String,
+      required: false,
     },
     appreciatedBy: [
       {
