@@ -44,6 +44,20 @@ momentSchema.statics.appreciateMoment = async function (_id, friend_id) {
     });
   }
 
+  const checkIfAppreciated = await this.find(
+    { _id: _id, "appreciatedBy.friend_id": friend_id },
+    { "appreciatedBy.friend_id": 1, _id: 0 }
+  );
+
+  if (checkIfAppreciated.length > 0) {
+    const unappreciate = await this.updateOne(
+      { _id: _id },
+      { $pull: { appreciatedBy: { friend_id: friend_id } } }
+    );
+    console.log("unliked");
+    return;
+  }
+
   const appreciatedMoment = await this.updateOne(
     { _id: _id }, //Moment Id
     {
