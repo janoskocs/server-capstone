@@ -10,7 +10,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-//Get all users
+//Get shortened versions of people user follows
 const getShortenedSpecificUsers = async (req, res) => {
   const user_id = req.user._id;
 
@@ -23,6 +23,22 @@ const getShortenedSpecificUsers = async (req, res) => {
     );
 
     res.status(200).json(details);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//Get shortened version of user by ID
+const getShortenedUserById = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.find(
+      { _id: userId },
+      { first_name: 1, last_name: 1, email: 1, avatar: 1 }
+    ).sort({ createdAt: -1 });
+
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -71,4 +87,5 @@ module.exports = {
   followFriend,
   unFollowFriend,
   getShortenedSpecificUsers,
+  getShortenedUserById,
 };

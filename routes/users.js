@@ -6,6 +6,7 @@ const {
   followFriend,
   unFollowFriend,
   getShortenedSpecificUsers,
+  getShortenedUserById,
 } = require("../controllers/usersController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -21,6 +22,9 @@ router.get("/allusers", getAllUsers);
 
 //Get shortened specific users
 router.get("/allusers/shortened", getShortenedSpecificUsers);
+
+//Get shortened user by Id
+router.get("/allusers/shortened/:userId", getShortenedUserById);
 
 //Get a single user
 router.get("/allusers/:userId", getSingleUser);
