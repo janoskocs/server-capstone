@@ -2,11 +2,21 @@ const Moment = require("../models/MomentModel");
 const mongoose = require("mongoose");
 const axios = require("axios");
 
-//GET all moments
+//GET all moments based on who is logged in
 const getAllMoments = async (req, res) => {
   const user_id = req.user._id; //This is from the requireAuth middleware
 
   const moments = await Moment.find({ user_id }).sort({ createdAt: -1 }); //Get moments based on user id from DB and sort them in descending order. knex what? knex who?
+
+  res.status(200).json(moments);
+};
+
+const getMomentsByUserId = async (req, res) => {
+  const { userId } = req.params;
+
+  const moments = await Moment.find({ user_id: userId }).sort({
+    createdAt: -1,
+  }); //Get moments based on user id from DB and sort them in descending order. knex what? knex who?
 
   res.status(200).json(moments);
 };
@@ -155,4 +165,5 @@ module.exports = {
   updateMoment,
   deleteMoment,
   appreciateMoment,
+  getMomentsByUserId,
 };

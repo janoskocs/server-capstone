@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createMoment,
   getAllMoments,
+  getMomentsByUserId,
   getMoment,
   updateMoment,
   deleteMoment,
@@ -17,6 +18,9 @@ const router = express.Router();
 router.use(requireAuth);
 //Get all moments
 router.get("/", getAllMoments);
+
+//Get all moments by userId
+router.get("/:userId", getMomentsByUserId);
 
 //Get a single moment
 router.get("/:momentId", getMoment);

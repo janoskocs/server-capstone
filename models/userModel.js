@@ -52,10 +52,9 @@ userSchema.statics.signup = async function (
   last_name,
   avatar
 ) {
-  //This must be a regular function so that the this keyword can do its job
+  //This must be a regular function so that the this keyword can do its job :D
 
   //Validation
-  console.log(first_name, last_name);
   if (!email || !password || !first_name || !last_name) {
     throw Error("All fields must be filled.");
   }

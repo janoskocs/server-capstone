@@ -12,11 +12,11 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
-    const { _id, first_name, last_name } = user;
+    const { _id, first_name, last_name, avatar } = user;
 
     const token = createToken(_id); //Create token based on user's id
 
-    res.status(200).json({ email, _id, first_name, last_name, token }); //Send email, id, fname, lname and token as response, this will be the payload, secret, and sign thingy in a hash
+    res.status(200).json({ email, _id, first_name, last_name, avatar, token }); //Send email, id, fname, lname, avatar url and token as response, this will be the payload, secret, and sign thingy in a hash
   } catch (error) {
     res.status(400).json({ error: error.message });
     console.log(error);
