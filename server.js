@@ -26,7 +26,7 @@ app.use("/api/user", usersRoutes);
 
 //Connect to DB first, then start listening for requests
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
   .then(() => {
     //Listen for requests
     app.listen(process.env.PORT, () => {
