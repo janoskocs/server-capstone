@@ -7,6 +7,7 @@ const {
   updateMoment,
   deleteMoment,
   appreciateMoment,
+  getAllMomentsMood,
 } = require("../controllers/momentController");
 
 const requireAuth = require("../middleware/requireAuth");
@@ -16,8 +17,12 @@ const router = express.Router();
 //If auth is valid, it will attach the id in the req.user so the controllers below have access to it
 //Check the requireAuth for more comments
 router.use(requireAuth);
+
 //Get all moments
 router.get("/", getAllMoments);
+
+//Get users' moments mood
+router.get("/mood", getAllMomentsMood);
 
 //Get all moments by userId
 router.get("/:userId", getMomentsByUserId);
